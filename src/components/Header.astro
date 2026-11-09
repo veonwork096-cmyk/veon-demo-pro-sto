@@ -11,7 +11,7 @@ const links = [
   { href: "#locations", label: "Адреси" },
 ];
 ---
-<header class="header on-inverse">
+<header class="header on-inverse" data-rec="W-R002,W-R003,W-R109,SEO-R011">
   <div class="container header__bar">
     <a class="header__logo" href="#top" aria-label="PRO.СТО, на початок сторінки">
       <picture>
@@ -20,7 +20,7 @@ const links = [
       </picture>
     </a>
 
-    <nav class="header__nav" aria-label="Розділи сторінки">
+    <nav class="header__nav" aria-label="Розділи сторінки" data-rec="W-R104">
       <ul>
         {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>

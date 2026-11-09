@@ -32,7 +32,7 @@ const favicon = `${base}favicon.svg`;
   <body id="top">
     <a class="skip-link" href="#main">{lang.startsWith("uk") ? "До змісту" : lang.startsWith("ru") ? "К содержанию" : "Skip to content"}</a>
     <slot name="header" />
-    <main id="main"><slot /></main>
+    <main id="main" data-rec="SEO-R003"><slot /></main>
     <slot name="footer" />
     <script src="../scripts/reveal.ts"></script>
   </body>

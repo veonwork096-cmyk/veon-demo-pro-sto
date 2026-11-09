@@ -2,7 +2,7 @@
 import Icon from "./Icon.astro";
 import { contacts } from "../data/content";
 ---
-<div class="sticky-bar" data-sticky-bar>
+<div class="sticky-bar" data-sticky-bar data-rec="W-R103">
   <a class="sticky-bar__call" href={`tel:${contacts.phone}`}><Icon name="phone" /><span>Подзвонити</span></a>
   <a class="sticky-bar__item" href={contacts.telegram} rel="noopener" target="_blank"><Icon name="telegram" /><span class="sticky-bar__label">Telegram</span></a>
   <a class="sticky-bar__item" href="#locations"><Icon name="pin" /><span class="sticky-bar__label">Адреси</span></a>
