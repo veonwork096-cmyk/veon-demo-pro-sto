@@ -1,0 +1,59 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { contacts } from "../data/content";
+
+const future = ["Автозапчастини", "Про нас", "Вакансії", "Блог", "Політика конфіденційності"];
+---
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <p class="footer__mark">PRO.СТО</p>
+      <p>{contacts.legal}<br />ЄДРПОУ {contacts.edrpou}</p>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Зв’язок</h2>
+      <ul>
+        <li><a class="link" href={`tel:${contacts.phone}`}>{contacts.phoneLabel}</a></li>
+        <li><a class="link" href={contacts.telegram} rel="noopener" target="_blank">Telegram</a></li>
+        <li><a class="link" href={`mailto:${contacts.email}`}>{contacts.email}</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Соцмережі</h2>
+      <ul>
+        <li><a class="link" href={contacts.instagram} rel="noopener" target="_blank">Instagram</a></li>
+        <li><a class="link" href={contacts.facebook} rel="noopener" target="_blank">Facebook</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h2 class="footer__title">Сайт</h2>
+      <ul>
+        {future.map((f) => <li><FutureLink note="Розділ у розробці">{f}</FutureLink></li>)}
+        <li><FutureLink note="Розділ у розробці">Застосунок PRO.СТО UA</FutureLink></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--color-paper-2); padding-block: var(--space-2xl) var(--space-xl); }
+  .footer__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+  .footer__brand { display: grid; gap: var(--space-sm); align-content: start; color: var(--color-muted); font-size: var(--text-sm); }
+  .footer__mark { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-section); line-height: 1; color: var(--color-text); }
+  .footer__title { font-family: var(--font-body); font-weight: var(--weight-strong); font-size: var(--text-sm); color: var(--color-muted); margin-bottom: var(--space-xs); max-width: none; }
+  .footer__col ul { display: grid; }
+  .footer__col li { white-space: nowrap; }
+  .footer__col :global(.future-link) { color: var(--color-muted); }
+  @media (min-width: 40rem) {
+    .footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 60rem) {
+    .footer__grid { grid-template-columns: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 2fr) minmax(0, 3fr); column-gap: var(--gap-columns); }
+  }
+  @media (max-width: 59.99rem) {
+    .footer { padding-bottom: calc(var(--space-xl) + 72px); }
+  }
+</style>

@@ -1,0 +1,54 @@
+---
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { contacts, fleetPayment, fleetTerms, fleetWho } from "../data/content";
+---
+<section id="fleet" class="fleet on-inverse" aria-labelledby="fleet-title">
+  <div class="container fleet__grid">
+    <div class="fleet__head">
+      <h2 id="fleet-title">Для автопарків — гарантія до року</h2>
+      <p>{fleetWho}</p>
+    </div>
+
+    <ul class="fleet__terms">
+      {fleetTerms.map((t) => <li>{t}</li>)}
+    </ul>
+
+    <p class="fleet__pay"><b>Оплата.</b> {fleetPayment}</p>
+
+    <div class="fleet__actions">
+      <div class="fleet__buttons">
+        <a class="btn btn--light" href={`mailto:${contacts.email}`}><Icon name="mail" /><span>Написати на e-mail</span></a>
+        <a class="btn btn--ghost-light" href={`tel:${contacts.phone}`}><Icon name="phone" /><span>{contacts.phoneLabel}</span></a>
+      </div>
+      <FutureLink note="Розділ у розробці">Детальніше для автопарків</FutureLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .fleet { margin-top: var(--section-gap); padding-block: var(--space-3xl); background: var(--color-inverse); color: var(--color-on-inverse); }
+  .fleet__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+  .fleet__head { display: grid; gap: var(--space-md); }
+  .fleet__head p { color: var(--color-on-inverse-muted); max-width: 48ch; }
+  .fleet__terms { display: grid; border-top: 1px solid var(--color-rule-inverse); }
+  .fleet__terms li { padding-block: var(--space-md); border-bottom: 1px solid var(--color-rule-inverse); font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-title); line-height: 1.1; }
+  .fleet__pay { color: var(--color-on-inverse-muted); max-width: 60ch; }
+  .fleet__pay b { color: var(--color-on-inverse); font-weight: var(--weight-strong); }
+  .fleet__actions { display: grid; justify-items: start; gap: var(--space-md); }
+  .fleet__buttons { display: flex; flex-wrap: wrap; gap: var(--space-sm) var(--space-md); }
+
+  @media (max-width: 39.99rem) {
+    .fleet__actions, .fleet__buttons { width: 100%; }
+    .fleet__buttons .btn { width: 100%; }
+  }
+  @media (min-width: 60rem) {
+    .fleet { padding-block: var(--space-4xl); }
+    .fleet__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-areas: "head terms" "pay terms" "actions terms"; column-gap: var(--space-2xl); align-items: start; }
+    .fleet__head { grid-area: head; }
+    .fleet__terms { grid-area: terms; }
+    .fleet__terms li { font-size: var(--text-place); padding-block: var(--space-lg); }
+    .fleet__pay { grid-area: pay; }
+    .fleet__actions { grid-area: actions; }
+  }
+</style>

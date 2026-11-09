@@ -1,0 +1,27 @@
+---
+import Icon from "./Icon.astro";
+import { contacts } from "../data/content";
+---
+<div class="sticky-bar" data-sticky-bar>
+  <a class="sticky-bar__call" href={`tel:${contacts.phone}`}><Icon name="phone" /><span>Подзвонити</span></a>
+  <a class="sticky-bar__item" href={contacts.telegram} rel="noopener" target="_blank"><Icon name="telegram" /><span class="sticky-bar__label">Telegram</span></a>
+  <a class="sticky-bar__item" href="#locations"><Icon name="pin" /><span class="sticky-bar__label">Адреси</span></a>
+</div>
+
+<style>
+  .sticky-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: var(--z-sticky); display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: var(--space-xs); padding: var(--space-xs) var(--gutter) calc(var(--space-xs) + env(safe-area-inset-bottom)); background: var(--color-inverse); color: var(--color-on-inverse); --color-focus: var(--color-focus-on-inverse); transition: transform var(--dur-short) var(--ease-out); }
+  .sticky-bar a { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); min-height: 48px; border-radius: var(--radius); font-weight: var(--weight-strong); font-size: var(--text-sm); text-decoration: none; white-space: nowrap; transition: background-color var(--dur-micro) var(--ease-out); }
+  .sticky-bar svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .sticky-bar__call { background: var(--color-on-inverse); color: var(--color-accent); }
+  .sticky-bar__call:hover { background: var(--color-paper-2); }
+  .sticky-bar__item { padding-inline: var(--space-sm); border: 1px solid var(--color-rule-inverse); }
+  .sticky-bar__item:hover { border-color: var(--color-on-inverse); }
+  .sticky-bar a:active { transform: scale(.98); }
+  :global(.js) .sticky-bar:not(.is-shown) { transform: translateY(100%); }
+  @media (max-width: 23.99rem) {
+    .sticky-bar__item { width: 48px; padding-inline: 0; }
+    .sticky-bar__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+  @media (min-width: 60rem) { .sticky-bar { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .sticky-bar { transition: none; } .sticky-bar a:active { transform: none; } }
+</style>

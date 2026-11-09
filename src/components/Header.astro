@@ -1,0 +1,99 @@
+---
+import Icon from "./Icon.astro";
+import { contacts, hours } from "../data/content";
+import logoWebp from "../assets/logo-pro-sto.webp";
+import logoPng from "../assets/logo-pro-sto.png";
+
+const links = [
+  { href: "#prices", label: "Ціни" },
+  { href: "#services", label: "Послуги" },
+  { href: "#fleet", label: "Автопаркам" },
+  { href: "#locations", label: "Адреси" },
+];
+---
+<header class="header on-inverse">
+  <div class="container header__bar">
+    <a class="header__logo" href="#top" aria-label="PRO.СТО, на початок сторінки">
+      <picture>
+        <source srcset={logoWebp.src} type="image/webp" />
+        <img src={logoPng.src} width="186" height="40" alt="PRO.СТО" decoding="async" />
+      </picture>
+    </a>
+
+    <nav class="header__nav" aria-label="Розділи сторінки">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a class="header__phone" href={`tel:${contacts.phone}`}>{contacts.phoneLabel}</a>
+      <a class="btn btn--ghost-light header__tg" href={contacts.telegram} rel="noopener" target="_blank">
+        <Icon name="telegram" /><span>Telegram</span>
+      </a>
+    </div>
+
+    <a class="header__call" href={`tel:${contacts.phone}`} aria-label={`Подзвонити ${contacts.phoneLabel}`}>
+      <Icon name="phone" />
+    </a>
+
+    <details class="header__menu" data-menu>
+      <summary aria-label="Меню">
+        <span class="header__menu-open"><Icon name="menu" /></span>
+        <span class="header__menu-close"><Icon name="close" /></span>
+      </summary>
+      <div class="header__panel">
+        <nav aria-label="Розділи сторінки, мобільне меню">
+          <ul class="header__panel-links">
+            {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+          </ul>
+        </nav>
+        <div class="header__panel-contacts">
+          <a class="btn btn--light" href={`tel:${contacts.phone}`}><Icon name="phone" /><span>{contacts.phoneLabel}</span></a>
+          <a class="btn btn--ghost-light" href={contacts.telegram} rel="noopener" target="_blank"><Icon name="telegram" /><span>Написати в Telegram</span></a>
+          <p class="header__panel-hours">
+            {hours.map((h) => <span>{h.days} {h.time}</span>)}
+          </p>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .header { position: sticky; top: 0; z-index: var(--z-nav); background: var(--color-inverse); color: var(--color-on-inverse); }
+  .header__bar { display: flex; align-items: center; gap: var(--space-md); min-height: var(--header-h); }
+  .header__logo { display: inline-flex; flex-shrink: 0; margin-right: auto; }
+  .header__logo img { width: 140px; height: auto; }
+  .header__nav, .header__actions { display: none; }
+
+  .header__call, .header__menu summary { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--radius); cursor: pointer; transition: background-color var(--dur-micro) var(--ease-out); }
+  .header__call { background: var(--color-on-inverse); color: var(--color-accent); }
+  .header__call:hover { background: var(--color-paper-2); }
+  .header__menu summary { list-style: none; color: var(--color-on-inverse); border: 2px solid var(--color-rule-inverse); }
+  .header__menu summary::-webkit-details-marker { display: none; }
+  .header__menu summary:hover { border-color: var(--color-on-inverse); }
+  .header__menu-close { display: none; }
+  .header__menu[open] .header__menu-open { display: none; }
+  .header__menu[open] .header__menu-close { display: inline-flex; }
+
+  .header__menu:not([open]) .header__panel { display: none; }
+  .header__panel { position: absolute; left: 0; right: 0; top: 100%; background: var(--color-inverse); border-top: 1px solid var(--color-rule-inverse); padding: var(--space-md) var(--gutter) var(--space-xl); display: grid; gap: var(--space-lg); }
+  .header__panel-links a { display: flex; align-items: center; min-height: 52px; font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-title); text-decoration: none; border-bottom: 1px solid var(--color-rule-inverse); }
+  .header__panel-links a:hover { color: var(--color-paper-2); }
+  .header__panel-contacts { display: grid; gap: var(--space-sm); }
+  .header__panel-hours { display: flex; flex-wrap: wrap; column-gap: var(--space-md); color: var(--color-on-inverse-muted); font-size: var(--text-sm); }
+
+  @media (min-width: 60rem) {
+    .header__logo img { width: 186px; }
+    .header__call, .header__menu { display: none; }
+    .header__nav { display: block; }
+    .header__nav ul { display: flex; gap: var(--space-xs); }
+    .header__nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--space-sm); font-size: var(--text-sm); text-decoration: none; color: var(--color-on-inverse); transition: color var(--dur-micro) var(--ease-out); }
+    .header__nav a:hover { color: var(--color-paper-2); text-decoration: underline; text-underline-offset: 0.35em; }
+    .header__actions { display: flex; align-items: center; gap: var(--space-lg); margin-left: var(--space-lg); }
+    .header__phone { font-weight: var(--weight-strong); white-space: nowrap; text-decoration: none; font-variant-numeric: tabular-nums; }
+    .header__phone:hover { text-decoration: underline; text-underline-offset: 0.3em; }
+    .header__tg { min-height: 44px; padding-inline: var(--space-md); font-size: var(--text-sm); }
+  }
+</style>

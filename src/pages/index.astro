@@ -1,0 +1,50 @@
+---
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import Prices from "../components/Prices.astro";
+import Services from "../components/Services.astro";
+import Why from "../components/Why.astro";
+import Fleet from "../components/Fleet.astro";
+import Locations from "../components/Locations.astro";
+import Footer from "../components/Footer.astro";
+import StickyBar from "../components/StickyBar.astro";
+import { contacts, locations } from "../data/content";
+
+const title = "Автосервіс у Львові PRO.СТО — 4 СТО, ціни на діагностику і ТО";
+const description = "Чотири СТО PRO.СТО у Львові, Солонці, Підбірцях і Зубрі. Діагностика від 500 грн, ТО, ремонт двигуна, DPF/EGR, чіп-тюнінг. Тел. (093) 00 55555.";
+
+// JSON-LD: AutoRepair for each of the 4 locations (no openingHours until the client confirms hours per location).
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": locations.map((l) => ({
+    "@type": "AutoRepair",
+    name: `PRO.СТО, ${l.place}`,
+    telephone: contacts.phone,
+    email: contacts.email,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: l.street.replace(/ /g, " "),
+      addressLocality: l.place,
+      addressRegion: "Львівська область",
+      addressCountry: "UA",
+    },
+  })),
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <Header slot="header" />
+  <Hero />
+  <Prices />
+  <Services />
+  <Why />
+  <Fleet />
+  <Locations />
+  <Footer slot="footer" />
+  <StickyBar slot="footer" />
+</Base>
+
+<script>
+  import "../scripts/page.ts";
+</script>

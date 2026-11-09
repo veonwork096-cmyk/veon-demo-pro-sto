@@ -1,0 +1,22 @@
+---
+import Base from "../layouts/Base.astro";
+import { contacts } from "../data/content";
+const home = import.meta.env.BASE_URL;
+---
+<Base lang="uk" title="Сторінку не знайдено — PRO.СТО" description="Такої сторінки немає. Поверніться на головну PRO.СТО.">
+  <section class="nf container" aria-labelledby="nf-title">
+    <h1 id="nf-title">Такої сторінки немає</h1>
+    <p>Ціни, послуги й адреси чотирьох СТО — на головній.</p>
+    <div class="nf__actions">
+      <a class="btn btn--primary" href={home}>На головну</a>
+      <a class="link" href={`tel:${contacts.phone}`}>{contacts.phoneLabel}</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { display: grid; gap: var(--space-lg); align-content: center; min-height: 80svh; padding-block: var(--space-3xl); }
+  .nf h1 { font-size: var(--text-display); max-width: 14ch; text-wrap: balance; }
+  .nf p { color: var(--color-muted); }
+  .nf__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md) var(--space-xl); }
+</style>

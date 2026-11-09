@@ -1,0 +1,49 @@
+---
+// W-F001 (since 2017), W-F002 (figures stated by the company), W-F004 (advantages).
+---
+<section id="why" class="section why" aria-labelledby="why-title">
+  <div class="container why__grid">
+    <div class="why__year">
+      <p class="why__num" aria-hidden="true">2017</p>
+      <h2 id="why-title">Працюємо відтоді у Львові та на Окружній</h2>
+    </div>
+
+    <div class="why__body">
+      <dl class="why__list">
+        <div>
+          <dt>Майстри</dt>
+          <dd>Досвід спеціалістів понад 8 років, регулярне навчання персоналу.</dd>
+        </div>
+        <div>
+          <dt>Запчастини</dt>
+          <dd>Сертифіковані бренди; 90% запчастин завжди в наявності (заявлено компанією).</dd>
+        </div>
+        <div>
+          <dt>Поки чекаєте</dt>
+          <dd>Зона очікування: дивани, Wi-Fi, кава, PlayStation.</dd>
+        </div>
+        <div>
+          <dt>Гарантія</dt>
+          <dd>Гарантія і контроль якості робіт; для автопарків — гарантія до 1 року.</dd>
+        </div>
+      </dl>
+      <p class="why__claim">За даними компанії: понад 10&nbsp;000 клієнтів і понад 50 видів послуг. Цифри заявлено компанією.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .why__grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xl); }
+  .why__year { display: grid; gap: var(--space-xs); align-content: start; }
+  .why__num { font-family: var(--font-display); font-weight: var(--weight-display); font-size: clamp(6rem, 3rem + 14vw, 14rem); line-height: 0.85; font-variant-numeric: tabular-nums; color: var(--color-text); }
+  .why__list { display: grid; }
+  .why__list > div { display: grid; gap: var(--space-2xs); padding-block: var(--space-md); border-top: 1px solid var(--color-rule-strong); }
+  .why__list dt { font-weight: var(--weight-strong); }
+  .why__list dd { color: var(--color-muted); }
+  .why__claim { margin-top: var(--space-lg); font-size: var(--text-sm); color: var(--color-muted); max-width: 52ch; }
+
+  @media (min-width: 60rem) {
+    .why__grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--space-2xl); align-items: end; }
+    .why__list > div { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--gap-columns); padding-block: var(--space-lg); }
+  }
+</style>

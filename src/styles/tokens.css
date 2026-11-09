@@ -1,0 +1,88 @@
+/* Hallmark · shape: custom · genre: modern-minimal · theme: custom · job: book+visit · idea: "Ціна видна з дороги: червона стела цін біля в'їзду, червоне = ціна або дзвінок" · vibe: "чесний прайс, бетон, фірмовий червоний, придорожня стела"
+ * paper: #EDEDEA · accent: #C20019 · display: Fira Sans Extra Condensed · body: Onest · hero: типографський, H1 зліва, червона стела з трьома цінами справа · nav: темна плита, логотип, 4 якоря, номер і Telegram · footer: світлий колофон на #DCDDD9 · imagery: none · signature: червона стела з цінами на першому екрані
+ * axes: light/display-condensed/warm · posture: committed · surface: absolute · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: E, без фото клієнта; виразність тримають цифри цін у стелі та в прайсі */
+/* Hallmark · waive 7b · --color-accent-ink #FFFFFF only as text on the red stela and red button · concept.md fixes #FFFFFF in the brand palette (white on #C20019 6.4:1); it is never a surface */
+/* Hallmark · answer 23 · .locations__phone is the one display-size red on the page below the hero: concept.md «Адреси»: the shared number «крупно красным», red = price or call */
+/* Hallmark · answer F4 · .btn--light is the call/e-mail button only on the dark #171717 surfaces (header menu, fleet), where red fails contrast (2.8:1) · concept.md «Кнопки» */
+/* Client design tokens: from design/concept.md (veon-concept: colors, fonts). */
+:root {
+  /* Palette (concept.md §5, «Дизайн-система для FULL») */
+  --color-bg: #EDEDEA;
+  --color-paper-2: #DCDDD9;
+  --color-text: #171717;
+  --color-muted: #4F5154;
+  --color-accent: #C20019;
+  --color-accent-hover: #A80016;
+  --color-accent-ink: #FFFFFF;
+  --color-inverse: #171717;
+  --color-on-inverse: #EDEDEA;
+  --color-on-inverse-muted: #DCDDD9;
+  --color-rule: #DCDDD9;
+  --color-rule-strong: #4F5154;
+  --color-rule-inverse: #4F5154;
+  --color-focus: #171717;
+  --color-focus-on-accent: #FFFFFF;
+  --color-focus-on-inverse: #EDEDEA;
+
+  /* Type */
+  --font-display: "Fira Sans Extra Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Onest", system-ui, sans-serif;
+  --text-stela: clamp(4rem, 1.6rem + 7.4vw, 9rem);
+  --text-display: clamp(3rem, 1.8rem + 3.9vw, 5.5rem);
+  --text-section: clamp(2.25rem, 1.65rem + 1.9vw, 3.5rem);
+  --text-title: clamp(1.5rem, 1.25rem + 0.75vw, 2rem);
+  --text-place: clamp(2rem, 1.6rem + 1.2vw, 2.5rem);
+  --text-md: clamp(1.0625rem, 1.03rem + 0.1vw, 1.125rem);
+  --text-sm: 0.9375rem;
+  --weight-display: 800;
+  --weight-body: 400;
+  --weight-strong: 600;
+
+  /* Space (craft.md §3 scale) */
+  --space-3xs: 2px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --space-4xl: 144px;
+  --section-gap: clamp(var(--space-3xl), 4rem + 5vw, var(--space-4xl));
+  --gutter: 20px;
+  --gap-columns: 24px;
+  --container: 1296px;
+  --space: var(--gutter);
+
+  /* Shape */
+  --radius: 2px;
+  --radius-block: 0;
+  --control-h: 52px;
+  --header-h: 56px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-in: cubic-bezier(.5, 0, .75, 0);
+  --ease-in-out: cubic-bezier(.65, 0, .35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+  --dur: var(--dur-long);
+
+  /* Layers */
+  --z-sticky: 200;
+  --z-nav: 300;
+  --z-tooltip: 600;
+}
+
+@media (min-width: 40rem) {
+  :root { --gutter: 40px; }
+}
+@media (min-width: 60rem) {
+  :root { --header-h: 72px; }
+}
+@media (min-width: 80rem) {
+  :root { --gutter: 72px; }
+}

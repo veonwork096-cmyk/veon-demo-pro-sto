@@ -1,0 +1,104 @@
+---
+import Icon from "./Icon.astro";
+import Price from "./Price.astro";
+import { contacts, hours, locations, stelaPrices } from "../data/content";
+---
+<section id="hero" class="hero" aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1 id="hero-title">PRO.СТО — чотири автосервіси у Львові та околицях</h1>
+      <p class="hero__sub">Діагностика, ТО і ремонт легкових авто. Один номер для всіх чотирьох СТО.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href={`tel:${contacts.phone}`}><Icon name="phone" /><span>Подзвонити</span></a>
+        <a class="btn btn--outline" href={contacts.telegram} rel="noopener" target="_blank"><Icon name="telegram" /><span>Написати в Telegram</span></a>
+      </div>
+      <p class="hero__hours">
+        <span class="visually-hidden">Графік роботи:</span>
+        {hours.map((h) => <span><b>{h.days}</b> {h.time}</span>)}
+      </p>
+    </div>
+
+    <aside class="stela on-accent" aria-label="Ціни на популярні роботи">
+      <ul class="stela__list">
+        {stelaPrices.map((p, i) => (
+          <li class="stela__row" style={`--i:${i}`}>
+            <span class="stela__name">{p.name}</span>
+            <Price from={p.from} value={p.value} class="stela__price" />
+          </li>
+        ))}
+      </ul>
+      <a class="stela__all" href="#prices">Усі ціни</a>
+    </aside>
+
+    <nav class="hero__points" aria-label="Чотири СТО">
+      <ul>
+        {locations.map((l) => (
+          <li>
+            <a href={`#${l.id}`}>
+              <span class="hero__place">{l.place}</span>
+              <span class="hero__street">{l.street}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: var(--space-lg) var(--space-2xl); }
+  .hero__grid { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "text" "stela" "points"; gap: var(--space-xl); }
+  .hero__text { grid-area: text; display: grid; gap: var(--space-lg); align-content: start; }
+  .hero h1 { font-size: var(--text-display); line-height: 1.0; max-width: 16ch; text-wrap: balance; }
+  .hero__sub { max-width: 40ch; color: var(--color-muted); }
+  .hero__actions { display: grid; gap: var(--space-sm); }
+  .hero__hours { display: flex; flex-wrap: wrap; column-gap: var(--space-md); row-gap: var(--space-2xs); font-size: var(--text-sm); color: var(--color-muted); }
+  .hero__hours b { font-weight: var(--weight-strong); color: var(--color-text); }
+
+  .stela { font-variant-numeric: tabular-nums; grid-area: stela; display: flex; flex-direction: column; margin-inline: calc(-1 * var(--gutter)); padding: var(--space-xl) var(--gutter); background: var(--color-accent); color: var(--color-accent-ink); border-radius: var(--radius-block); }
+  .stela__list { display: grid; gap: var(--space-lg); }
+  .stela__row { display: grid; gap: var(--space-2xs); padding-top: var(--space-md); border-top: 1px solid var(--color-accent-ink); }
+  .stela__row:first-child { border-top: 0; padding-top: 0; }
+  .stela__name { font-size: var(--text-sm); font-weight: var(--weight-strong); }
+  .stela :global(.stela__price .price__num) { font-size: var(--text-stela); letter-spacing: -0.01em; line-height: 0.9; }
+  .stela :global(.stela__price .price__from), .stela :global(.stela__price .price__cur) { font-size: var(--text-md); }
+  .stela__all { align-self: flex-start; display: inline-flex; align-items: center; min-height: 44px; margin-top: var(--space-lg); font-weight: var(--weight-strong); color: var(--color-accent-ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.3em; transition: opacity var(--dur-micro) var(--ease-out); }
+  .stela__all:hover { text-decoration-thickness: 3px; }
+
+  .hero__points { grid-area: points; }
+  .hero__points ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-md) var(--gap-columns); }
+  .hero__points a { display: grid; gap: var(--space-3xs); min-height: 44px; padding-top: var(--space-sm); border-top: 2px solid var(--color-text); text-decoration: none; transition: border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out); }
+  .hero__points a:hover { border-color: var(--color-accent); }
+  .hero__points a:hover .hero__place { color: var(--color-accent); }
+  .hero__place { font-family: var(--font-display); font-weight: var(--weight-display); font-size: var(--text-title); line-height: 1; transition: color var(--dur-micro) var(--ease-out); }
+  .hero__street { font-size: var(--text-sm); color: var(--color-muted); }
+
+  /* Motion 1: the stela «sets out» its prices once (only with script; visible otherwise) */
+  :global(.js) .stela__row { animation: stela-in 320ms var(--ease-out) both; }
+  @keyframes stela-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { :global(.js) .stela__row { animation: none; } }
+
+  @media (max-width: 39.99rem) {
+    .hero { padding-bottom: 0; }
+    .hero__grid { gap: var(--space-lg); }
+    .hero__text { gap: var(--space-md); }
+    .hero h1 { font-size: clamp(2.25rem, 1.5rem + 3.5vw, 3rem); }
+    .stela { padding-block: var(--space-lg); }
+  }
+  @media (min-width: 40rem) {
+    .hero__actions { grid-template-columns: repeat(2, max-content); }
+    .hero__points ul { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 60rem) {
+    .hero { padding-block: 0; }
+    .hero__grid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: minmax(var(--space-xl), 1fr) auto auto minmax(var(--space-xl), 1fr); grid-template-areas: ". stela" "text stela" "points stela" ". stela"; column-gap: var(--space-2xl); row-gap: 0; min-height: calc(100svh - var(--header-h)); }
+    .hero__points { margin-top: var(--space-2xl); }
+    .stela { margin-inline: 0; padding: var(--space-xl) var(--space-xl) var(--space-lg); justify-content: center; }
+    .stela__list { gap: var(--space-md); }
+    :global(.js) .stela__row { animation-duration: 480ms; animation-delay: calc(var(--i) * 60ms); }
+  }
+  @media (min-width: 60rem) and (max-height: 50rem) {
+    .stela :global(.stela__price .price__num) { font-size: clamp(4rem, 13svh, 9rem); }
+  }
+</style>

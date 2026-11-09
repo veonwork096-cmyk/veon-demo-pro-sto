@@ -1,0 +1,65 @@
+---
+import FutureLink from "./FutureLink.astro";
+import { baseServices, contacts, niches } from "../data/content";
+---
+<section id="services" class="section services" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section__head">
+      <h2 id="services-title">Від заміни масла до токарних робіт</h2>
+      <p class="section__lead">Легкові авто масових і преміальних марок. Окремо — дизель, чіп-тюнінг, двигун і Tesla.</p>
+    </div>
+
+    <ol class="niches">
+      {niches.map((n, i) => (
+        <li class="niches__item" data-reveal style={`--i:${i}`}>
+          <h3>{n.title}</h3>
+          <p>{n.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="base">
+      <h3 class="base__title">Щоденні роботи</h3>
+      <dl class="base__list">
+        {baseServices.map((s, i) => (
+          <div class="base__row" data-reveal style={`--i:${i + niches.length}`}>
+            <dt>{s.title}</dt>
+            <dd>{s.text}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="services__foot">
+      <p>Не знайшли свою роботу? Запитайте за номером <a class="link" href={`tel:${contacts.phone}`}>{contacts.phoneLabel}</a></p>
+      <FutureLink note="Розділ у розробці">Сторінки послуг</FutureLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .niches { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 2px solid var(--color-text); }
+  .niches__item { display: grid; gap: var(--space-xs); padding-block: var(--space-lg); border-bottom: 1px solid var(--color-rule-strong); }
+  .niches__item h3 { font-size: var(--text-section); line-height: 1; }
+  .niches__item p { color: var(--color-muted); max-width: 46ch; }
+
+  .base { display: grid; gap: var(--space-md); margin-top: var(--space-2xl); }
+  .base__title { font-size: var(--text-title); }
+  .base__list { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .base__row { display: grid; gap: var(--space-3xs); padding-block: var(--space-sm); border-top: 1px solid var(--color-rule-strong); }
+  .base__row dt { font-weight: var(--weight-strong); }
+  .base__row dd { color: var(--color-muted); font-size: var(--text-sm); }
+
+  .services__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-xl); margin-top: var(--space-xl); }
+  .services__foot p { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--space-xs); }
+
+  @media (min-width: 40rem) {
+    .base__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap-columns); }
+  }
+  @media (min-width: 60rem) {
+    .niches { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-2xl); }
+    .niches__item { padding-block: var(--space-xl); align-content: start; }
+    .base { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); column-gap: var(--space-2xl); align-items: start; }
+    .base__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

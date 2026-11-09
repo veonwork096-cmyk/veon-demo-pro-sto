@@ -1,0 +1,67 @@
+---
+import Icon from "./Icon.astro";
+import { contacts, hours, locations } from "../data/content";
+---
+<section id="locations" class="section locations" aria-labelledby="locations-title">
+  <div class="container">
+    <div class="locations__head">
+      <h2 id="locations-title">Чотири адреси, один номер</h2>
+      <div class="locations__contact">
+        <a class="locations__phone" href={`tel:${contacts.phone}`}>{contacts.phoneLabel}</a>
+        <div class="locations__channels">
+          <a class="btn btn--outline" href={contacts.telegram} rel="noopener" target="_blank"><Icon name="telegram" /><span>Telegram</span></a>
+          <a class="link" href={`mailto:${contacts.email}`}>{contacts.email}</a>
+        </div>
+        <dl class="locations__hours">
+          {hours.map((h) => (
+            <div><dt>{h.days}</dt><dd>{h.time}</dd></div>
+          ))}
+        </dl>
+      </div>
+    </div>
+
+    <ul class="locations__list">
+      {locations.map((l) => (
+        <li id={l.id} class="locations__card" tabindex="-1">
+          <h3>{l.place}</h3>
+          <p class="locations__street">{l.area && <span>{l.area},</span>} {l.street}</p>
+          <a class="link locations__map" href={l.map} rel="noopener" target="_blank"><Icon name="pin" /><span>Маршрут</span><span class="visually-hidden"> до СТО {l.place} (Google Maps)</span></a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .locations { padding-bottom: var(--section-gap); }
+  .locations__head { display: grid; gap: var(--space-lg); margin-bottom: var(--space-xl); }
+  .locations__contact { display: grid; gap: var(--space-md); justify-items: start; }
+  .locations__phone { font-family: var(--font-display); font-weight: var(--weight-display); font-size: clamp(2.75rem, 1.5rem + 4vw, 4.5rem); line-height: 1; color: var(--color-accent); text-decoration: none; white-space: nowrap; font-variant-numeric: tabular-nums; transition: color var(--dur-micro) var(--ease-out); }
+  .locations__phone:hover { color: var(--color-accent-hover); }
+  .locations__channels { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm) var(--space-lg); }
+  .locations__hours { display: flex; flex-wrap: wrap; gap: var(--space-2xs) var(--space-lg); font-size: var(--text-sm); }
+  .locations__hours div { display: flex; gap: var(--space-xs); }
+  .locations__hours dt { font-weight: var(--weight-strong); }
+  .locations__hours dd { color: var(--color-muted); }
+
+  .locations__list { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 2px solid var(--color-text); }
+  .locations__card { display: grid; gap: var(--space-xs); align-content: start; padding: var(--space-lg) 0; border-bottom: 1px solid var(--color-rule-strong); transition: background-color var(--dur-short) var(--ease-out); }
+  .locations__card h3 { font-size: var(--text-place); line-height: 1; }
+  .locations__street { color: var(--color-muted); }
+  .locations__street span { display: block; }
+  .locations__map { gap: var(--space-xs); justify-self: start; }
+  .locations__map svg { width: 18px; height: 18px; }
+  .locations__card:target { background: var(--color-paper-2); box-shadow: inset 0 3px 0 var(--color-accent); }
+  .locations__card:focus { outline: none; }
+
+  @media (min-width: 40rem) {
+    .locations__list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--gap-columns); }
+  }
+  @media (min-width: 60rem) {
+    .locations__head { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: var(--space-2xl); align-items: start; }
+    .locations__list { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 0; }
+    .locations__card { padding: var(--space-lg) var(--space-lg) var(--space-xl); border-bottom: 0; border-left: 1px solid var(--color-rule-strong); }
+    .locations__card:first-child { border-left: 0; padding-left: 0; }
+    .locations__card:target:first-child { padding-left: var(--space-md); }
+  }
+</style>

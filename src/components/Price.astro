@@ -1,0 +1,9 @@
+---
+interface Props { from: boolean; value: string; unit?: string; class?: string; }
+const { from, value, unit, class: cls } = Astro.props;
+---
+<span class:list={["price", cls]}>
+  {from && <span class="price__from">від</span>}
+  <span class="price__num">{value}</span>
+  <span class="price__cur">грн{unit ? ` ${unit}` : ""}</span>
+</span>

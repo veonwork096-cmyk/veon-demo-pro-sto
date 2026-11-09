@@ -1,0 +1,94 @@
+---
+import Icon from "./Icon.astro";
+import Price from "./Price.astro";
+import FutureLink from "./FutureLink.astro";
+import { contacts, priceTabs } from "../data/content";
+---
+<section id="prices" class="section prices" aria-labelledby="prices-title">
+  <div class="container">
+    <div class="section__head prices__head">
+      <h2 id="prices-title">Скільки коштує — ще до дзвінка</h2>
+      <p class="section__lead">Ціни на роботи за прайсом PRO.СТО. Точну вартість назве майстер після огляду.</p>
+    </div>
+
+    <div class="prices__switch" data-tabs>
+      <div class="prices__tabs" role="tablist" aria-label="Категорії цін" hidden data-tablist>
+        {priceTabs.map((t, i) => (
+          <button type="button" role="tab" id={`tab-${t.id}`} aria-controls={`panel-${t.id}`} aria-selected={i === 0 ? "true" : "false"} tabindex={i === 0 ? 0 : -1}>{t.label}</button>
+        ))}
+        <span class="prices__indicator" aria-hidden="true" data-indicator></span>
+      </div>
+
+      {priceTabs.map((t) => (
+        <div class="prices__panel" role="tabpanel" id={`panel-${t.id}`} aria-labelledby={`tab-${t.id}`} data-panel>
+          <h3 class="prices__cat">{t.label}</h3>
+          <table class="prices__table" aria-label={`${t.label}: послуга і ціна`}>
+            <tbody>
+              {t.rows.map((r) => (
+                <tr>
+                  <th scope="row">{r.name}</th>
+                  <td><Price from={r.from} value={r.value} unit={r.unit} class="prices__price" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+    </div>
+
+    <div class="prices__foot">
+      <a class="btn btn--primary" href={`tel:${contacts.phone}`}><Icon name="phone" /><span>Подзвонити і записатися</span></a>
+      <FutureLink note="Розділ у розробці">Весь прайс: 10 категорій</FutureLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .prices__head { grid-template-columns: minmax(0, 1fr); }
+  .prices__tabs { position: relative; display: flex; gap: var(--space-lg); overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid var(--color-rule-strong); margin-bottom: var(--space-md); margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+  .prices__tabs::-webkit-scrollbar { display: none; }
+  .prices__tabs[hidden] { display: none; }
+  .prices__tabs button { flex-shrink: 0; min-height: 52px; padding: 0; border: 0; background: none; font: var(--weight-strong) var(--text-md)/1 var(--font-body); color: var(--color-muted); white-space: nowrap; cursor: pointer; transition: color var(--dur-micro) var(--ease-out); }
+  .prices__tabs button:hover { color: var(--color-text); }
+  .prices__tabs button[aria-selected="true"] { color: var(--color-text); }
+  .prices__tabs button:focus-visible { outline-offset: -2px; }
+  .prices__indicator { position: absolute; left: 0; bottom: -1px; width: 100px; height: 3px; background: var(--color-text); transform-origin: left; transition: transform var(--dur-short) var(--ease-out); pointer-events: none; }
+
+  .prices__panel + .prices__panel { margin-top: var(--space-xl); }
+  .prices__cat { font-size: var(--text-title); margin-bottom: var(--space-xs); }
+  :global(.js) [data-tabs].is-ready .prices__panel + .prices__panel { margin-top: 0; }
+  :global(.js) [data-tabs].is-ready .prices__cat { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .prices__panel.is-entering tr { animation: row-in var(--dur-short) var(--ease-out) both; }
+  @keyframes row-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .prices__table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  .prices__table tr { border-bottom: 1px solid var(--color-rule-strong); }
+  .prices__table th[scope="row"] { padding: var(--space-md) var(--space-md) var(--space-md) 0; text-align: left; font-weight: var(--weight-body); vertical-align: baseline; }
+  .prices__table td { padding: var(--space-md) 0; text-align: right; vertical-align: baseline; white-space: nowrap; color: var(--color-accent); }
+  .prices__table :global(.prices__price .price__num) { font-size: clamp(2rem, 1.6rem + 1.4vw, 3rem); }
+  .prices__table :global(.prices__price .price__from), .prices__table :global(.prices__price .price__cur) { color: var(--color-text); font-weight: var(--weight-body); }
+
+  .prices__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-md) var(--space-xl); margin-top: var(--space-xl); }
+
+  @media (max-width: 39.99rem) {
+    .prices__table tr { display: grid; gap: var(--space-2xs); padding-block: var(--space-md); }
+    .prices__table th[scope="row"], .prices__table td { padding: 0; text-align: left; }
+    .prices__foot .btn { width: 100%; }
+  }
+  @media (max-width: 59.99rem) {
+    .prices__tabs { flex-wrap: wrap; column-gap: var(--space-lg); row-gap: 0; overflow: visible; margin-inline: 0; padding-inline: 0; }
+    .prices__tabs button { min-height: 44px; }
+    .prices__tabs button[aria-selected="true"] { box-shadow: inset 0 -3px 0 var(--color-text); }
+    .prices__indicator { display: none; }
+  }
+  @media (min-width: 60rem) {
+    .prices__head { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); align-items: end; column-gap: var(--space-2xl); }
+    .prices__tabs { gap: var(--space-xl); margin-inline: 0; padding-inline: 0; overflow: visible; }
+    .prices__table th[scope="row"] { font-size: var(--text-title); font-family: var(--font-display); font-weight: var(--weight-display); line-height: 1.1; padding-block: var(--space-lg); }
+    .prices__table td { padding-block: var(--space-lg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prices__panel.is-entering tr { animation: none; }
+    .prices__indicator { transition: none; }
+  }
+</style>
